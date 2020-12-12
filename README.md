@@ -9,6 +9,23 @@ This project uses `FMEServer.js` provided by [FME](https://playground.fmeserver.
 
 ## Usage
 
+To use this activity pack in [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/) you need to register it as an activity pack.
+
+1. Sign in to ArcGIS Online or Portal for ArcGIS
+1. Go to **My Content**
+1. Select **Add Item > An application**
+    - Type: `Web Mapping`
+    - Purpose: `Ready To Use`
+    - API: `JavaScript`
+    - URL: The URL to this activity pack manifest
+        - Use https://unpkg.com/@geocortex/workflow-activities-fme/activitypack.json for the latest version
+        - Use https://unpkg.com/@geocortex/workflow-activities-fme@0.1.0/activitypack.json for a specific version
+    - Title: Your desired title
+    - Tags: Must include `geocortex-workflow-activity-pack`
+1. Reload [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/)
+
+## Development
+
 This project was bootstrapped with the [Geocortex Workflow SDK](https://github.com/geocortex/vertigis-workflow-sdk). Before you can use your activity pack in the [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/), you will need to [register the activity pack](https://developers.geocortex.com/docs/workflow/sdk-web-overview#register-the-activity-pack).
 
 ## Available Scripts
