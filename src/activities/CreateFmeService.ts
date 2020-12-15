@@ -38,6 +38,7 @@ export interface CreateFmeServiceOutputs {
 
 /**
  * @displayName Create FME Service
+ * @defaultName fmeService
  * @category FME
  * @description Creates an authenticated connection to an FME server.
  */
