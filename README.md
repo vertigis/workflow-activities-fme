@@ -9,7 +9,9 @@ This project uses `FMEServer.js` provided by [FME](https://playground.fmeserver.
 
 ## Usage
 
-To use this activity pack in [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/) you need to register it as an activity pack.
+To use the FME activities in [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/) you need to register an activity pack and then add the activities to a workflow.
+
+### Register the FME activity pack
 
 1. Sign in to ArcGIS Online or Portal for ArcGIS
 1. Go to **My Content**
@@ -19,10 +21,27 @@ To use this activity pack in [Geocortex Workflow Designer](https://apps.geocorte
     - API: `JavaScript`
     - URL: The URL to this activity pack manifest
         - Use https://unpkg.com/@geocortex/workflow-activities-fme/activitypack.json for the latest version
-        - Use https://unpkg.com/@geocortex/workflow-activities-fme@0.1.0/activitypack.json for a specific version
+        - Use https://unpkg.com/@geocortex/workflow-activities-fme@1.0.0/activitypack.json for a specific version
     - Title: Your desired title
     - Tags: Must include `geocortex-workflow-activity-pack`
 1. Reload [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/)
+1. The FME activities will now appear in the activity toolbox in a `FME` category
+
+### Use the FME activities in a workflow
+
+1. Establish a connection to the FME service
+    1. Add the `Create FME Service` activity to a workflow
+    1. Set the `URL` input to the root URL of your FME server. For example, `https://demos-safe-software.fmecloud.com`.
+    1. If you have an existing FME access token, assign it to the `Token` input
+    1. If you have a username and password, assign them to the `Username` and `Password` inputs
+    - **IMPORTANT:** tokens and passwords are credentials that should not be hard coded into workflows. These values should be acquired by the workflow at runtime from the end user or from another secure system.
+1. Use the FME service
+    1. Add one of the other FME activities to the workflow. For example, `Run FME Job`.
+    1. Set the `Service` input of the activity to be the output of the `Create FME Service` activity
+        - Typically this would use an expression like `=$fmeService1.service`
+    1. Supply any additional inputs to the activity
+    1. Supply the `result` output of the activity to the inputs of other activities in the workflow
+1. Run the workflow
 
 ## Development
 
