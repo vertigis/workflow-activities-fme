@@ -14,7 +14,7 @@ export interface CheckFmeJobStatusInputs {
      * @description The ID of the FME job to check the status of.
      * @required
      */
-    jobId: string;
+    jobId: number;
 }
 
 /** An interface that defines the outputs of the activity. */
@@ -84,7 +84,7 @@ export class CheckFmeJobStatus implements IActivityHandler {
         if (!service) {
             throw new Error("service is required");
         }
-        if (!jobId) {
+        if (jobId === undefined || jobId === null) {
             throw new Error("jobId is required");
         }
 
