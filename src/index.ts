@@ -5,3 +5,4 @@ export * from "./activities/GetFmeWorkspaceParameters";
 export * from "./activities/RunFmeDataDownload";
 export * from "./activities/RunFmeJob";
 export * from "./activities/RunFmeJobAsync";
+export * from "./activities/UseFmeService";

@@ -1,5 +1,6 @@
 import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
 import { FmeService } from "../FmeService";
+import { objectToQueryString } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
 export interface RunFmeDataDownloadInputs {
@@ -71,7 +72,7 @@ export class RunFmeDataDownload implements IActivityHandler {
             service.server.runDataDownload(
                 repository,
                 workspace,
-                this.objectToQueryString(parameters),
+                objectToQueryString(parameters),
                 (result) => {
                     return resolve({
                         result,
@@ -79,21 +80,5 @@ export class RunFmeDataDownload implements IActivityHandler {
                 }
             );
         });
-    }
-
-    objectToQueryString(data?: {}): string {
-        if (!data) {
-            return "";
-        }
-        return Object.keys(data)
-            .map((k) => {
-                const value = data[k];
-                const valueToEncode =
-                    value === undefined || value === null ? "" : value;
-                return `${encodeURIComponent(k)}=${encodeURIComponent(
-                    valueToEncode
-                )}`;
-            })
-            .join("&");
     }
 }
