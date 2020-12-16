@@ -1,6 +1,5 @@
 {
     "name": "@geocortex/workflow-activities-fme",
-    "private": true,
     "version": "0.0.0-semantically-released",
     "description": "FME activities for Geocortex Workflow",
     "repository": {
