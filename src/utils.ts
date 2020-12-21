@@ -2,14 +2,28 @@ export function objectToQueryString(data?: {}): string {
     if (!data) {
         return "";
     }
-    return Object.keys(data)
-        .map((k) => {
-            const value = data[k];
+
+    const params: string[] = [];
+    Object.keys(data).forEach((k) => {
+        const value = data[k];
+        if (Array.isArray(value)) {
+            // FME uses duplicate parameters to represent arrays
+            value.forEach((v) => {
+                const valueToEncode = v === undefined || v === null ? "" : v;
+                params.push(
+                    `${encodeURIComponent(k)}=${encodeURIComponent(
+                        valueToEncode
+                    )}`
+                );
+            });
+        } else {
             const valueToEncode =
                 value === undefined || value === null ? "" : value;
-            return `${encodeURIComponent(k)}=${encodeURIComponent(
-                valueToEncode
-            )}`;
-        })
-        .join("&");
+            params.push(
+                `${encodeURIComponent(k)}=${encodeURIComponent(valueToEncode)}`
+            );
+        }
+    });
+
+    return params.join("&");
 }
