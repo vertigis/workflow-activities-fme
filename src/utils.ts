@@ -1,4 +1,6 @@
-export function objectToQueryString(data?: {}): string {
+export function objectToQueryString(
+    data?: Record<string, string | number | boolean>
+): string {
     if (!data) {
         return "";
     }

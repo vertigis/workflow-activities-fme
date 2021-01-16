@@ -56,6 +56,7 @@ export class CreateFmeService implements IActivityHandler {
 
         if (token) {
             // Initialize with the token
+            /* eslint-disable @typescript-eslint/no-non-null-assertion */
             FMEServer.init(
                 normalizedUrl,
                 token,
@@ -64,6 +65,8 @@ export class CreateFmeService implements IActivityHandler {
                 undefined!,
                 undefined!
             );
+            /* eslint-enable @typescript-eslint/no-non-null-assertion */
+
             return {
                 service: {
                     server: FMEServer,
@@ -73,6 +76,7 @@ export class CreateFmeService implements IActivityHandler {
         } else if (username && password) {
             return new Promise<CreateFmeServiceOutputs>((resolve, reject) => {
                 // Initialize with a temporary token so the URL gets set
+                /* eslint-disable @typescript-eslint/no-non-null-assertion */
                 FMEServer.init(
                     normalizedUrl,
                     "temporary",
@@ -81,6 +85,8 @@ export class CreateFmeService implements IActivityHandler {
                     undefined!,
                     undefined!
                 );
+                /* eslint-enable @typescript-eslint/no-non-null-assertion */
+
                 // Generate a token
                 FMEServer.generateToken(
                     username,
@@ -90,6 +96,7 @@ export class CreateFmeService implements IActivityHandler {
                     (token) => {
                         if (token) {
                             // Reinitialize with the generated token
+                            /* eslint-disable @typescript-eslint/no-non-null-assertion */
                             FMEServer.init(
                                 normalizedUrl,
                                 token,
@@ -98,6 +105,8 @@ export class CreateFmeService implements IActivityHandler {
                                 undefined!,
                                 undefined!
                             );
+                            /* eslint-enable @typescript-eslint/no-non-null-assertion */
+
                             return resolve({
                                 service: {
                                     server: FMEServer,
