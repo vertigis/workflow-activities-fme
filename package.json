@@ -20,6 +20,7 @@
     ],
     "scripts": {
         "build": "vertigis-workflow-sdk build",
+        "lint": "eslint -f codeframe --max-warnings 0 --ext .ts,.tsx src/",
         "generate": "vertigis-workflow-sdk generate",
         "start": "vertigis-workflow-sdk start"
     },

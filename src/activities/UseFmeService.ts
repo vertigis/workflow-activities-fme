@@ -39,7 +39,7 @@ export interface UseFmeServiceInputs {
     /**
      * @description The body parameters to pass to the service operation when the method is POST or PUT.
      */
-    parameters?: string | object;
+    parameters?: string | Record<string, any>;
 }
 
 /** An interface that defines the outputs of the activity. */
@@ -77,6 +77,7 @@ export class UseFmeService implements IActivityHandler {
             body = parameters;
         }
 
+        /* eslint-disable @typescript-eslint/no-non-null-assertion */
         return new Promise((resolve) => {
             service.server.customRequest(
                 `${service.url}/fmerest/v3/${path}`,
@@ -90,5 +91,6 @@ export class UseFmeService implements IActivityHandler {
                 contentType!
             );
         });
+        /* eslint-enable @typescript-eslint/no-non-null-assertion */
     }
 }

@@ -98,7 +98,7 @@ export class CheckFmeJobStatus implements IActivityHandler {
                     });
                 },
                 "",
-                null!
+                null! // eslint-disable-line @typescript-eslint/no-non-null-assertion
             );
         });
     }
