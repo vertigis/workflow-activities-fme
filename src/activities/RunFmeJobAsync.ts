@@ -44,6 +44,8 @@ export interface RunFmeJobAsyncOutputs {
  * @displayName Run FME Job Async
  * @category FME
  * @description Runs an FME job asynchronously.
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class RunFmeJobAsync implements IActivityHandler {
     async execute(

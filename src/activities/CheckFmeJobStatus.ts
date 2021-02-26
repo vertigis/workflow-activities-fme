@@ -75,6 +75,8 @@ export interface CheckFmeJobStatusOutputs {
  * @displayName Check FME Job Status
  * @category FME
  * @description Checks the status of an FME job.
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class CheckFmeJobStatus implements IActivityHandler {
     async execute(

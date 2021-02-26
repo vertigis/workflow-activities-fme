@@ -41,6 +41,8 @@ export interface CreateFmeServiceOutputs {
  * @defaultName fmeService
  * @category FME
  * @description Creates an authenticated connection to an FME server.
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class CreateFmeService implements IActivityHandler {
     async execute(
