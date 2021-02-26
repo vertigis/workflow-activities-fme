@@ -55,6 +55,8 @@ export interface UseFmeServiceOutputs {
  * @category FME
  * @description Utility activity to generically access any FME Server REST API operation.
  * @helpUrl https://docs.safe.com/fme/html/FME_REST/apidoc/v3/#!
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class UseFmeService implements IActivityHandler {
     async execute(inputs: UseFmeServiceInputs): Promise<UseFmeServiceOutputs> {

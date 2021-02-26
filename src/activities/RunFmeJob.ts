@@ -53,6 +53,8 @@ export interface RunFmeJobOutputs {
  * @displayName Run FME Job
  * @category FME
  * @description Runs an FME job synchronously.
+ * @clientOnly
+ * @unsupportedApps GMV
  */
 export class RunFmeJob implements IActivityHandler {
     async execute(inputs: RunFmeJobInputs): Promise<RunFmeJobOutputs> {
