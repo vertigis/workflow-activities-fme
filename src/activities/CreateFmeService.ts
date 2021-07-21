@@ -91,8 +91,8 @@ export class CreateFmeService implements IActivityHandler {
 
                 // Generate a token
                 FMEServer.generateToken(
-                    username,
-                    password,
+                    encodeURIComponent(username),
+                    encodeURIComponent(password),
                     expiration || 60,
                     "minutes",
                     (token) => {
