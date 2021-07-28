@@ -7,6 +7,16 @@ This project contains activities for interacting with the [FME Server REST API](
 
 This project uses `FMEServer.js` provided by [FME](https://playground.fmeserver.com/javascript/javascript-library/get-the-library/).
 
+## Requirements
+
+### Geocortex Workflow Versions
+
+The FME activities are designed to work with Geocortex Workflow versions `5.20` and above.
+
+### FME Versions
+
+The FME activities are designed to work with FME Server REST API `V3`.
+
 ## Usage
 
 To use the FME activities in [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/) you need to register an activity pack and then add the activities to a workflow.
@@ -21,7 +31,7 @@ To use the FME activities in [Geocortex Workflow Designer](https://apps.geocorte
     - API: `JavaScript`
     - URL: The URL to this activity pack manifest
         - Use https://unpkg.com/@geocortex/workflow-activities-fme/activitypack.json for the latest version
-        - Use https://unpkg.com/@geocortex/workflow-activities-fme@1.0.0/activitypack.json for a specific version
+        - Use https://unpkg.com/@geocortex/workflow-activities-fme@2.0.0/activitypack.json for a specific version
     - Title: Your desired title
     - Tags: Must include `geocortex-workflow-activity-pack`
 1. Reload [Geocortex Workflow Designer](https://apps.geocortex.com/workflow/designer/)
