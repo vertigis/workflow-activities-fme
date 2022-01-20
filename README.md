@@ -3,7 +3,7 @@
 [![CI/CD](https://github.com/geocortex/workflow-activities-fme/workflows/CI/CD/badge.svg)](https://github.com/geocortex/workflow-activities-fme/actions)
 [![npm](https://img.shields.io/npm/v/@geocortex/workflow-activities-fme)](https://www.npmjs.com/package/@geocortex/workflow-activities-fme)
 
-This project contains activities for interacting with the [FME Server REST API](https://docs.safe.com/fme/html/FME_REST/apidoc/v3/) in a [VertiGIS Studio Workflow](https://www.vertigisstudio.com/products/geocortex-workflow/).
+This project contains activities for interacting with the [FME Server REST API](https://docs.safe.com/fme/html/FME_REST/apidoc/v3/) in a [VertiGIS Studio Workflow](https://www.vertigisstudio.com/products/vertigis-studio-workflow/).
 
 This project uses `FMEServer.js` provided by [FME](https://playground.fmeserver.com/javascript/javascript-library/get-the-library/).
 
