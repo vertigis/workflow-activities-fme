@@ -1,7 +1,7 @@
 {
     "name": "@geocortex/workflow-activities-fme",
     "version": "0.0.0-semantically-released",
-    "description": "FME activities for Geocortex Workflow",
+    "description": "FME activities for VertiGIS Studio Workflow",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/geocortex/workflow-activities-fme.git"
