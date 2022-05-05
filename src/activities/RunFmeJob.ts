@@ -72,13 +72,15 @@ export class RunFmeJob implements IActivityHandler {
         // Add parameters to the request
         const publishedParameters: { name: string; value: any }[] = [];
 
-        for (const key of Object.keys(parameters)) {
-            const value = parameters[key];
-            if (value) {
-                publishedParameters.push({
-                    name: key,
-                    value: value,
-                });
+        if (parameters) {
+            for (const key of Object.keys(parameters)) {
+                const value = parameters[key];
+                if (value) {
+                    publishedParameters.push({
+                        name: key,
+                        value: value,
+                    });
+                }
             }
         }
 
