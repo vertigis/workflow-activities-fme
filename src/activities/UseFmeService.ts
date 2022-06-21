@@ -25,6 +25,7 @@ export interface UseFmeServiceInputs {
         | "notifications/topics"
         | "repositories"
         | "resources/connections"
+        | "resources/types"
         | "schedules"
         | "schedules/categories"
         | string;
@@ -35,7 +36,10 @@ export interface UseFmeServiceInputs {
     /**
      * @description The content type of the request. This is required when the method is POST or PUT.
      */
-    contentType?: "application/x-www-form-urlencoded" | "application/json";
+    contentType?:
+        | "application/x-www-form-urlencoded"
+        | "application/json"
+        | "multipart/form-data";
     /**
      * @description The body parameters to pass to the service operation when the method is POST or PUT.
      */
@@ -68,15 +72,21 @@ export class UseFmeService implements IActivityHandler {
             throw new Error("path is required");
         }
 
-        let body: string | undefined;
+        let params: string | FormData | undefined;
         if (typeof parameters === "object") {
             if (contentType === "application/json") {
-                body = JSON.stringify(parameters);
+                params = JSON.stringify(parameters);
             } else if (contentType === "application/x-www-form-urlencoded") {
-                body = objectToQueryString(parameters);
+                params = objectToQueryString(parameters);
+            } else if (contentType === "multipart/form-data") {
+                const formData = new FormData();
+                for (const name in parameters) {
+                    formData.append(name, parameters[name]);
+                }
+                params = formData;
             }
         } else {
-            body = parameters;
+            params = parameters;
         }
 
         /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -89,7 +99,7 @@ export class UseFmeService implements IActivityHandler {
                         result,
                     });
                 },
-                body!,
+                params as any, // FormData is accepted and used internally by the API.
                 contentType!
             );
         });
