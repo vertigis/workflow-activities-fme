@@ -235,7 +235,7 @@ export interface UseFmeServiceInputs {
      */
     parameters?: string | Record<string, any>;
     /**
-     * @description Parameters used to substitute {token} values in the path.
+     * @description Parameters used to substitute {token} values in the path. For example, use an object like { repository: "my-repo" } to replace the {repository} token in the path "repositories/{repository}/items".
      */
     pathParameters?: Record<
         string,
