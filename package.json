@@ -1,14 +1,14 @@
 {
-    "name": "@geocortex/workflow-activities-fme",
+    "name": "@vertigis/workflow-activities-fme",
     "version": "0.0.0-semantically-released",
     "description": "FME activities for VertiGIS Studio Workflow",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/geocortex/workflow-activities-fme.git"
+        "url": "git+https://github.com/vertigis/workflow-activities-fme.git"
     },
     "license": "MIT",
     "author": "VertiGIS",
-    "homepage": "https://github.com/geocortex/workflow-activities-fme#readme",
+    "homepage": "https://github.com/vertigis/workflow-activities-fme#readme",
     "keywords": [
         "VertiGIS",
         "Geocortex",
