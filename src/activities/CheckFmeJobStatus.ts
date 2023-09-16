@@ -54,6 +54,7 @@ export interface CheckFmeJobStatusOutputs {
             priority?: number;
             requesterHost?: string;
             requesterResultPort?: number;
+            resultDatasetDownloadUrl?: string;
             status?: string;
             statusMessage?: string;
             timeFinished?: string;
@@ -76,7 +77,7 @@ export interface CheckFmeJobStatusOutputs {
  * @category FME
  * @description Checks the status of an FME job.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class CheckFmeJobStatus implements IActivityHandler {
     async execute(
