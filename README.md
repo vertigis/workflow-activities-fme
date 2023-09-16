@@ -15,7 +15,7 @@ The FME activities are designed to work with VertiGIS Studio Workflow versions `
 
 ### FME Versions
 
-The FME activities are designed to work with FME Server REST API `V3`.
+The FME activities are designed to work with version 3 of the [FME Server REST API](https://docs.safe.com/fme/html/FME_REST/apidoc/v3/#).
 
 ## Usage
 
