@@ -53,7 +53,7 @@ export interface RunFmeDataDownloadOutputs {
  * @category FME
  * @description Runs an FME data download job.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class RunFmeDataDownload implements IActivityHandler {
     async execute(

@@ -47,7 +47,7 @@ export interface GetFmeWorkspaceParametersOutputs {
  * @category FME
  * @description Gets all published parameters for a given FME workspace.
  * @clientOnly
- * @unsupportedApps GMV
+ * @supportedApps EXB, GWV, GVH, WAB
  */
 export class GetFmeWorkspaceParameters implements IActivityHandler {
     async execute(
