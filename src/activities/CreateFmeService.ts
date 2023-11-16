@@ -72,7 +72,7 @@ export class CreateFmeService implements IActivityHandler {
             return {
                 service: {
                     server: FMEServer,
-                    url,
+                    url: normalizedUrl,
                 },
             };
         } else if (username && password) {
