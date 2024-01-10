@@ -27,7 +27,7 @@
     "dependencies": {},
     "devDependencies": {
         "@geocortex/workflow": "5.27.1",
-        "@vertigis/workflow-sdk": "2.0.5",
+        "@vertigis/workflow-sdk": "4.1.0",
         "conventional-changelog-conventionalcommits": "^5.0.0",
         "husky": "^4.3.5",
         "prettier": "^2.7.1",
