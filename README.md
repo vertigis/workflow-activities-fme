@@ -11,7 +11,7 @@ This project uses `FMEServer.js` provided by [FME](https://playground.fmeserver.
 
 ### VertiGIS Studio Workflow Versions
 
-The FME activities are designed to work with VertiGIS Studio Workflow versions `5.20` and above.
+The FME activities are designed to work with VertiGIS Studio Workflow versions `5.31` and above.
 
 ### FME Versions
 
@@ -30,8 +30,9 @@ To use the FME activities in [VertiGIS Studio Workflow Designer](https://apps.ve
     - Purpose: `Ready To Use`
     - API: `JavaScript`
     - URL: The URL to this activity pack manifest
-        - Use https://unpkg.com/@vertigis/workflow-activities-fme/activitypack.json for the latest version
-        - Use https://unpkg.com/@vertigis/workflow-activities-fme@3.0.0/activitypack.json for a specific version
+        - Use https://unpkg.com/@vertigis/workflow-activities-fme@4.0.0/activitypack.json for a specific version
+        - Use https://unpkg.com/@vertigis/workflow-activities-fme@4/activitypack.json for the latest revision of a specific major version
+        - Use https://unpkg.com/@vertigis/workflow-activities-fme/activitypack.json for the latest version (not recommended for production use)
         - Use https://localhost:5000/activitypack.json for a local development version
     - Title: Your desired title
     - Tags: Must include `geocortex-workflow-activity-pack`

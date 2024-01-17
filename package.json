@@ -20,13 +20,13 @@
     ],
     "scripts": {
         "build": "vertigis-workflow-sdk build",
-        "lint": "eslint -f codeframe --max-warnings 0 --ext .ts,.tsx src/",
+        "lint": "eslint --max-warnings 0 --ext .ts,.tsx src/",
         "generate": "vertigis-workflow-sdk generate",
         "start": "vertigis-workflow-sdk start"
     },
     "dependencies": {},
     "devDependencies": {
-        "@vertigis/workflow": "5.36.0",
+        "@vertigis/workflow": "5.37.0",
         "@vertigis/workflow-sdk": "4.1.0",
         "conventional-changelog-conventionalcommits": "^7.0.2",
         "husky": "^4.3.5",
