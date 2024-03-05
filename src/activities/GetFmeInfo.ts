@@ -47,7 +47,7 @@ export class GetFmeInfo implements IActivityHandler {
                     });
                 },
                 "",
-                "application/x-www-form-urlencoded"
+                null! // eslint-disable-line @typescript-eslint/no-non-null-assertion
             );
         });
     }
