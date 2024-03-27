@@ -1,4 +1,4 @@
-import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
+import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
 import { FmeService } from "../FmeService";
 
 /** An interface that defines the inputs of the activity. */
@@ -88,6 +88,7 @@ export class RunFmeJob implements IActivityHandler {
             service.server.submitSyncJob(
                 repository,
                 workspace,
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 { publishedParameters } as any,
                 (result) => {
                     return resolve({

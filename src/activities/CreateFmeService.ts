@@ -1,4 +1,4 @@
-import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
+import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
 import FMEServer from "../FMEServer";
 import { FmeService } from "../FmeService";
 
@@ -95,7 +95,7 @@ export class CreateFmeService implements IActivityHandler {
                     encodeURIComponent(password),
                     expiration || 60,
                     "minutes",
-                    (token) => {
+                    (token: string) => {
                         if (token) {
                             // Reinitialize with the generated token
                             /* eslint-disable @typescript-eslint/no-non-null-assertion */

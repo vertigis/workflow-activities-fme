@@ -1,9 +1,11 @@
-import type { IActivityHandler } from "@geocortex/workflow/runtime/IActivityHandler";
+import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
 import { FmeService } from "../FmeService";
 import { objectToQueryString } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
 export interface UseFmeServiceInputs {
+    /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
+
     /**
      * @displayName FME Service
      * @description The FME service.
@@ -241,6 +243,8 @@ export interface UseFmeServiceInputs {
         string,
         string | number | boolean | null | undefined
     >;
+
+    /* eslint-enable @typescript-eslint/no-redundant-type-constituents */
 }
 
 /** An interface that defines the outputs of the activity. */
@@ -287,6 +291,7 @@ export class UseFmeService implements IActivityHandler {
             } else if (contentType === "multipart/form-data") {
                 const formData = new FormData();
                 for (const name in parameters) {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     formData.append(name, parameters[name]);
                 }
                 params = formData;
@@ -305,6 +310,7 @@ export class UseFmeService implements IActivityHandler {
                         result,
                     });
                 },
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                 params as any, // FormData is accepted and used internally by the API.
                 contentType!
             );
