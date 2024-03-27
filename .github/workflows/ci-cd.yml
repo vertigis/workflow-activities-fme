@@ -17,12 +17,12 @@ jobs:
     test:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
-            - name: Use Node.js 18
-              uses: actions/setup-node@v3
+            - name: Use Node.js 20
+              uses: actions/setup-node@v4
               with:
-                  node-version: 18.x
+                  node-version: 20.x
 
             - run: npm install
 
@@ -30,37 +30,43 @@ jobs:
 
             - run: npm run lint
 
+            - run: cp LICENSE package.json README.md build
+
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: release
+                  path: build/
+
     release:
         runs-on: ubuntu-latest
         needs:
             - test
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta'
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
-                  # Pulls all commits (needed for semantic release to correctly version)
-                  # See https://github.com/semantic-release/semantic-release/issues/1526
-                  fetch-depth: "0"
+                  # Pulls all commits and tags (needed for semantic release to correctly version)
+                  fetch-depth: 0
                   persist-credentials: false
+                  sparse-checkout: |
+                      README.md
 
-            # Pulls all tags (needed for semantic release to correctly version)
-            - name: Fetch git tags
-              run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-
-            - name: Use Node.js 18
-              uses: actions/setup-node@v3
+            - name: Use Node.js 20
+              uses: actions/setup-node@v4
               with:
-                  node-version: 18.x
+                  node-version: 20.x
 
             - run: npm install
 
-            - run: npm run build
-
-            - run: cp LICENSE package.json README.md build
+            - name: Download release artifact
+              uses: actions/download-artifact@v3
+              with:
+                  name: release
+                  path: release
 
             - name: Release 🚀
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: npx semantic-release@^19
-              working-directory: ./build
+              run: npx semantic-release@^22
+              working-directory: ./release
