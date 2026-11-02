@@ -3,9 +3,7 @@
 [![CI/CD](https://github.com/vertigis/workflow-activities-fme/workflows/CI/CD/badge.svg)](https://github.com/vertigis/workflow-activities-fme/actions)
 [![npm](https://img.shields.io/npm/v/@vertigis/workflow-activities-fme)](https://www.npmjs.com/package/@vertigis/workflow-activities-fme)
 
-This project contains activities for interacting with the [FME Server REST API](https://docs.safe.com/fme/html/FME_REST/apidoc/v3/) in a [VertiGIS Studio Workflow](https://www.vertigisstudio.com/products/vertigis-studio-workflow/).
-
-This project uses `FMEServer.js` provided by [FME](https://playground.fmeserver.com/javascript/javascript-library/get-the-library/).
+This project contains activities for interacting with the [FME Flow REST API](https://docs.safe.com/fme/html/fmeapiv4/docs/index.html) in a [VertiGIS Studio Workflow](https://www.vertigisstudio.com/products/vertigis-studio-workflow/).
 
 ## Requirements
 
@@ -15,7 +13,9 @@ The FME activities are designed to work with VertiGIS Studio Workflow versions `
 
 ### FME Versions
 
-The FME activities are designed to work with version 3 of the [FME Server REST API](https://docs.safe.com/fme/html/FME_REST/apidoc/v3/#).
+All activities except `Get FME Info` use version 4 of the [FME Flow REST API](https://docs.safe.com/fme/html/fmeapiv4/docs/index.html). Version 3 is no longer supported by the other activities.
+
+The `Get FME Info` activity still uses the V3 info endpoint, since V4 has no equivalent.
 
 ## Usage
 

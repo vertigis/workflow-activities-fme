@@ -1,5 +1,5 @@
 import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
-import { FmeService } from "../FmeService";
+import { FmeService, fmeApiRequest } from "../FmeService";
 
 /** An interface that defines the inputs of the activity. */
 export interface CheckFmeJobStatusInputs {
@@ -23,52 +23,41 @@ export interface CheckFmeJobStatusOutputs {
      * @description The result of the activity.
      */
     result: {
-        description?: string;
+        id: number;
         engineHost?: string;
         engineName?: string;
-        id: number;
         repository?: string;
-        request?: {
-            NMDirectives?: {
-                directives: [];
-                successTopics: [];
-                failureTopics: [];
-            };
-            publishedParameters?: {
-                name: string;
-                value: any;
-            }[];
-            TMDirectives?: {
-                rtc?: boolean;
-                ttc?: number;
-                description?: string;
-                tag?: string;
-                priority?: number;
-                ttl?: number;
-            };
-            workspacePath?: string;
-        };
-        result?: {
-            id: number;
-            numFeaturesOutput?: number;
-            priority?: number;
-            requesterHost?: string;
-            requesterResultPort?: number;
-            resultDatasetDownloadUrl?: string;
-            status?: string;
-            statusMessage?: string;
-            timeFinished?: string;
-            timeRequested?: string;
-            timeStarted?: string;
-        };
+        workspace?: string;
+        directives?: { [key: string]: string };
+        failureTopics?: string[];
+        successTopics?: string[];
+        maxJobRuntime?: number;
+        maxTimeInQueue?: number;
+        queue?: string;
+        queueType?: string;
+        publishedParameters?: { [key: string]: any };
+        deploymentParameters?: { [key: string]: string };
+        featureOutputCount?: number;
+        requesterHost?: string;
+        requesterResultPort?: number;
+        resultDatasetDownloadUrl?: string;
         status?: string;
-        timeDelivered?: string;
+        statusMessage?: string;
+        sourceID?: string;
+        sourceName?: string;
+        sourceType?: string;
         timeFinished?: string;
         timeQueued?: string;
         timeStarted?: string;
-        timeSubmitted?: string;
-        userName?: string;
-        workspace?: string;
+        runtimeUsername?: string;
+        runtimeUserID?: string;
+        elapsedTime?: number;
+        cpuTime?: number;
+        cpuPercent?: number;
+        peakMemoryUsage?: number;
+        lineCount?: number;
+        warningCount?: number;
+        errorCount?: number;
     };
 }
 
@@ -91,18 +80,10 @@ export class CheckFmeJobStatus implements IActivityHandler {
             throw new Error("jobId is required");
         }
 
-        return new Promise((resolve) => {
-            service.server.customRequest(
-                `${service.url}/fmerest/v3/transformations/jobs/id/${jobId}`,
-                "GET",
-                (result) => {
-                    return resolve({
-                        result,
-                    });
-                },
-                "",
-                null! // eslint-disable-line @typescript-eslint/no-non-null-assertion
-            );
-        });
+        const result = await fmeApiRequest<CheckFmeJobStatusOutputs["result"]>(
+            service,
+            `/jobs/${encodeURIComponent(jobId)}`
+        );
+        return { result };
     }
 }

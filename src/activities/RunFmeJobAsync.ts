@@ -1,5 +1,5 @@
 import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
-import { FmeService } from "../FmeService";
+import { FmeService, fmeApiRequest, toPublishedParameters } from "../FmeService";
 
 /** An interface that defines the inputs of the activity. */
 export interface RunFmeJobAsyncInputs {
@@ -62,33 +62,19 @@ export class RunFmeJobAsync implements IActivityHandler {
             throw new Error("workspace is required");
         }
 
-        // Add parameters to the request
-        const publishedParameters: { name: string; value: any }[] = [];
-
-        if (parameters) {
-            for (const key of Object.keys(parameters)) {
-                const value = parameters[key];
-                if (value) {
-                    publishedParameters.push({
-                        name: key,
-                        value: value,
-                    });
-                }
+        const result = await fmeApiRequest<RunFmeJobAsyncOutputs["result"]>(
+            service,
+            "/jobs",
+            {
+                method: "POST",
+                contentType: "application/json",
+                body: JSON.stringify({
+                    repository,
+                    workspace,
+                    publishedParameters: toPublishedParameters(parameters),
+                }),
             }
-        }
-
-        return new Promise((resolve) => {
-            service.server.submitJob(
-                repository,
-                workspace,
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                { publishedParameters } as any,
-                (result) => {
-                    return resolve({
-                        result,
-                    });
-                }
-            );
-        });
+        );
+        return { result };
     }
 }
