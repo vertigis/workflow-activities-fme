@@ -14,7 +14,8 @@ export interface UseFmeServiceInputs {
     service: FmeService;
 
     /**
-     * @description The FME service operation.
+     * @displayName REST API endpoint path
+     * @description The path relative to the FME Flow REST API V4 root. Do not include `/fmeapiv4`.
      * @required
      */
     path:
