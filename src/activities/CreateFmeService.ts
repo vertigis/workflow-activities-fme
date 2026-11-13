@@ -1,6 +1,6 @@
 import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
-import FMEServer from "../FMEServer";
-import { FmeService } from "../FmeService";
+import { FmeService, fmeRequest } from "../FmeService";
+import { objectToQueryString } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
 export interface CreateFmeServiceInputs {
@@ -57,70 +57,25 @@ export class CreateFmeService implements IActivityHandler {
         const normalizedUrl = url.replace(/\/*$/, "");
 
         if (token) {
-            // Initialize with the token
-            /* eslint-disable @typescript-eslint/no-non-null-assertion */
-            FMEServer.init(
-                normalizedUrl,
-                token,
-                undefined!,
-                undefined!,
-                undefined!,
-                undefined!
-            );
-            /* eslint-enable @typescript-eslint/no-non-null-assertion */
-
-            return {
-                service: {
-                    server: FMEServer,
-                    url: normalizedUrl,
-                },
-            };
+            return { service: { url: normalizedUrl, token } };
         } else if (username && password) {
-            return new Promise<CreateFmeServiceOutputs>((resolve, reject) => {
-                // Initialize with a temporary token so the URL gets set
-                /* eslint-disable @typescript-eslint/no-non-null-assertion */
-                FMEServer.init(
-                    normalizedUrl,
-                    "temporary",
-                    undefined!,
-                    undefined!,
-                    undefined!,
-                    undefined!
-                );
-                /* eslint-enable @typescript-eslint/no-non-null-assertion */
-
-                // Generate a token
-                FMEServer.generateToken(
-                    encodeURIComponent(username),
-                    encodeURIComponent(password),
-                    expiration || 60,
-                    "minutes",
-                    (token: string) => {
-                        if (token) {
-                            // Reinitialize with the generated token
-                            /* eslint-disable @typescript-eslint/no-non-null-assertion */
-                            FMEServer.init(
-                                normalizedUrl,
-                                token,
-                                undefined!,
-                                undefined!,
-                                undefined!,
-                                undefined!
-                            );
-                            /* eslint-enable @typescript-eslint/no-non-null-assertion */
-
-                            return resolve({
-                                service: {
-                                    server: FMEServer,
-                                    url: normalizedUrl,
-                                },
-                            });
-                        } else {
-                            reject("Failed to generate token");
-                        }
-                    }
-                );
+            // The token endpoint is shared by all versions of the REST API.
+            const response = await fmeRequest<{
+                serviceResponse?: { token?: string };
+            }>({ url: normalizedUrl, token: "" }, "/fmetoken/generate.json", {
+                method: "POST",
+                contentType: "application/x-www-form-urlencoded",
+                body: objectToQueryString({
+                    user: username,
+                    password,
+                    expiration: (expiration || 60) * 60,
+                }),
             });
+            const generatedToken = response?.serviceResponse?.token;
+            if (!generatedToken) {
+                throw new Error("Failed to generate token");
+            }
+            return { service: { url: normalizedUrl, token: generatedToken } };
         } else {
             throw new Error("A token or username and password are required");
         }

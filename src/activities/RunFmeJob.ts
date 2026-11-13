@@ -1,5 +1,5 @@
 import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
-import { FmeService } from "../FmeService";
+import { FmeService, fmeApiRequest, toPublishedParameters } from "../FmeService";
 
 /** An interface that defines the inputs of the activity. */
 export interface RunFmeJobInputs {
@@ -37,14 +37,13 @@ export interface RunFmeJobOutputs {
      */
     result: {
         id: number;
-        numFeaturesOutput?: number;
-        priority?: number;
+        featureOutputCount?: number;
         requesterHost?: string;
         requesterResultPort?: number;
         status?: string;
         statusMessage?: string;
         timeFinished?: string;
-        timeRequested?: string;
+        timeQueued?: string;
         timeStarted?: string;
     };
 }
@@ -69,33 +68,30 @@ export class RunFmeJob implements IActivityHandler {
             throw new Error("workspace is required");
         }
 
-        // Add parameters to the request
-        const publishedParameters: { name: string; value: any }[] = [];
-
-        if (parameters) {
-            for (const key of Object.keys(parameters)) {
-                const value = parameters[key];
-                if (value) {
-                    publishedParameters.push({
-                        name: key,
-                        value: value,
-                    });
-                }
-            }
-        }
-
-        return new Promise((resolve) => {
-            service.server.submitSyncJob(
+        const { id } = await fmeApiRequest<{ id: number }>(service, "/jobs", {
+            method: "POST",
+            contentType: "application/json",
+            body: JSON.stringify({
                 repository,
                 workspace,
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                { publishedParameters } as any,
-                (result) => {
-                    return resolve({
-                        result,
-                    });
-                }
-            );
+                publishedParameters: toPublishedParameters(parameters),
+            }),
         });
+
+        // Long poll until the job finishes. The server returns early (with
+        // only the job ID, or an unfinished status) when the poll times out.
+        for (;;) {
+            const result = await fmeApiRequest<RunFmeJobOutputs["result"]>(
+                service,
+                `/jobs/${encodeURIComponent(id)}/result`,
+                { query: "longPoll=true" }
+            );
+            if (
+                result.status &&
+                !["queued", "running"].includes(result.status)
+            ) {
+                return { result };
+            }
+        }
     }
 }

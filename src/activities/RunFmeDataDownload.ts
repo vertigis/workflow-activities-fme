@@ -1,5 +1,5 @@
 import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
-import { FmeService } from "../FmeService";
+import { FmeService, fmeRequest } from "../FmeService";
 import { objectToQueryString } from "../utils";
 
 /** An interface that defines the inputs of the activity. */
@@ -70,17 +70,26 @@ export class RunFmeDataDownload implements IActivityHandler {
             throw new Error("workspace is required");
         }
 
-        return new Promise((resolve) => {
-            service.server.runDataDownload(
-                repository,
-                workspace,
-                objectToQueryString(parameters),
-                (result) => {
-                    return resolve({
-                        result,
-                    });
-                }
-            );
-        });
+        // The Data Download service is not part of the REST API and is
+        // unaffected by the REST API version.
+        const result = await fmeRequest<RunFmeDataDownloadOutputs["result"]>(
+            service,
+            `/fmedatadownload/${encodeURIComponent(
+                repository
+            )}/${encodeURIComponent(workspace)}`,
+            {
+                method: "POST",
+                contentType: "application/x-www-form-urlencoded",
+                body: [
+                    "opt_responseformat=json",
+                    "opt_showresult=true",
+                    `token=${encodeURIComponent(service.token)}`,
+                    objectToQueryString(parameters),
+                ]
+                    .filter(Boolean)
+                    .join("&"),
+            }
+        );
+        return { result };
     }
 }

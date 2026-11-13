@@ -1,5 +1,5 @@
 import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
-import { FmeService } from "../FmeService";
+import { FmeService, fmeRequest } from "../FmeService";
 
 export interface GetFmeInfoInputs {
     /**
@@ -37,18 +37,11 @@ export class GetFmeInfo implements IActivityHandler {
             throw new Error("service is required");
         }
 
-        return new Promise((resolve) => {
-            service.server.customRequest(
-                `${service.url}/fmerest/v3/info`,
-                "GET",
-                (result) => {
-                    return resolve({
-                        result,
-                    });
-                },
-                "",
-                null! // eslint-disable-line @typescript-eslint/no-non-null-assertion
-            );
-        });
+        // REST API V4 has no equivalent of the V3 `info` endpoint.
+        const result = await fmeRequest<GetFmeInfoOutputs["result"]>(
+            service,
+            "/fmerest/v3/info"
+        );
+        return { result };
     }
 }

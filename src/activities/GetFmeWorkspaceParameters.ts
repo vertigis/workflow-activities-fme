@@ -1,5 +1,5 @@
 import type { IActivityHandler } from "@vertigis/workflow/IActivityHandler";
-import { FmeService } from "../FmeService";
+import { FmeService, fmeApiRequest } from "../FmeService";
 
 /** An interface that defines the inputs of the activity. */
 export interface GetFmeWorkspaceParametersInputs {
@@ -64,16 +64,14 @@ export class GetFmeWorkspaceParameters implements IActivityHandler {
             throw new Error("workspace is required");
         }
 
-        return new Promise((resolve) => {
-            service.server.getWorkspaceParameters(
-                repository,
-                workspace,
-                (result) => {
-                    return resolve({
-                        result,
-                    });
-                }
-            );
-        });
+        const result = await fmeApiRequest<
+            GetFmeWorkspaceParametersOutputs["result"]
+        >(
+            service,
+            `/workspaces/${encodeURIComponent(repository)}/${encodeURIComponent(
+                workspace
+            )}/parameters`
+        );
+        return { result };
     }
 }
